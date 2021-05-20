@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4052a5c7-0e3a-42cd-8883-c92b958eea80" name="HETZNER" url="http://impfservice21.s1810456028.student.kwmhgb.at">
+        <fileTransfer host="s1810456028.student.kwmhgb.at" port="222" rootFolder="/usr/home/sstud592/public_html/impfservice21/bookstoreServer" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="222" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

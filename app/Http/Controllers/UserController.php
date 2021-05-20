@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
+
+class UserController extends Controller
+{
+    public function index(){
+        $users = User::with(['location', 'vaccination'])->get();
+        return $users;
+    }
+
+    public function findByID(int $id) : User {
+        $user = User::where('id', $id)->with(['vaccination'])->first();
+        return $user;
+    }
+
+    public function updateUser(Request $request, int $id): JsonResponse
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::get()->where('id', $id)->first();
+            if ($user != null) {
+                $user->update($request->all());
+            }
+            DB::commit();
+            $u = User::get()->where('id', $id)->first();
+
+            return response()->json($u, 201);
+        } catch (\Exception $e) {
+            // rollback all queries
+            DB::rollBack();
+            return response()->json("updating user failed: " . $e->getMessage(), 420);
+        }
+    }
+
+    public function checkSVNR(int $svnr)
+    {
+        $user = User::where('svnr', $svnr)->with(['location', 'vaccination'])->first();
+        return $user != null ? response()->json(true, 200) : response()->json(false, 200);
+    }
+
+    public function show($user){
+        $user = User::find($user);
+        return view('users.show',compact('user'));
+    }
+}
