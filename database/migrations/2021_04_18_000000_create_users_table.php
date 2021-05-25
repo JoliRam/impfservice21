@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('gender');
             $table->string('birthday');
             $table->bigInteger('svnr')->unique();
-            $table->bigInteger('phonenumber')->unique();
+            $table->bigInteger('phonenumber')->nullable();
             $table->boolean('is_vaccinated')->default(false);
             $table->string('email');
             $table->string('password');

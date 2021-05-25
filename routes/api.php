@@ -19,18 +19,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//CRUD Methoden Impftermin
 Route::get('vaccinations', [Controllers\VaccinationController::class,'index']);
 Route::get('vaccination/{id}', [Controllers\VaccinationController::class,'findByID']);
 
+//CRUD Methoden User
 Route::get('users', [Controllers\UserController::class,'index']);
 Route::get('users/{id}', [Controllers\UserController::class,'findByID']);
-Route::get('users/cecksvnr/{svnr}', [Controllers\UserController::class,'checkSVNR']);
+Route::delete('user/{id}', [Controllers\UserController::class,'delete']);
+Route::post('user', [Controllers\UserController::class,'save']);
 
+
+//CRUD Methoden Impfort
 Route::get('locations', [Controllers\LocationController::class,'index']);
+Route::get('location/{id}', [Controllers\LocationController::class,'findByID']);
+Route::delete('location/{id}', [Controllers\LocationController::class,'delete']);
+Route::post('location', [Controllers\LocationController::class,'save']);
+Route::put('location/{id}', [Controllers\LocationController::class,'update']);
+
+//LOGIN
 Route::post('auth/login', [Controllers\AuthController::class,'login']);
 
 
-Route::group(['middleware' => ['api', 'auth.jwt']], function (){
+Route::group(['middleware' => 'api', 'auth.jwt']], function (){
     Route::post('vaccination', [Controllers\VaccinationController::class,'save']);
     Route::put('vaccination/{id}', [Controllers\VaccinationController::class,'update']);
     Route::delete('vaccination/{id}', [Controllers\VaccinationController::class,'delete']);
